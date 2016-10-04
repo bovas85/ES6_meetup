@@ -177,9 +177,13 @@ function concatenateStrings(name, item, number) {
     return `${name} has ${number} ${item}s`;
   }
   else {
-  return `${name} has ${number} ${item}`;
+    return `${name} has ${number} ${item}`;
   }
 }
+// or use ternary but very long
+// return `${name} has ${(number === 0) ? "no" : number}
+// ${(number > 1) ? }
+
 
 console.log(concatenateStrings("Alex", "cat", 2) === "Alex has 2 cats");
 
@@ -200,3 +204,90 @@ $('.error').append(concatenateStrings("Alex", "cat", 2) + "<br>");
 console.log(concatenateStrings("Adam", "beer", 0) === "Adam has no beers");
 
 $('.error').append(concatenateStrings("Alex", "cat", 2) + "<br>");
+
+function multiply(x, y) {
+  y = y || 2; // way to prevent avoiding NaN for single variables
+  return x * y;
+}
+
+console.log(multiply(3)); // NaN or 2
+
+function multiplyEs6(x, y = 3) {
+  //y = y || 2; // ES5
+  return x * y;
+}
+
+console.log(multiplyEs6(3));
+
+
+// You can access the arguments of a function using the 'arguments' keyword
+const testing = function() {
+	return arguments;
+}
+
+// The arguments are given as an 'array-like object':
+console.log(testing(1, 2, 3, 4, 5));
+
+// The arguments keyword cannot access the arguments within an arrow function:
+// const testing = () => arguments; -- Throws an error!
+
+//The alternative is to use the rest '...' operator:
+const addOddNumbers = (...numbers) => numbers.reduce((a, b) => b % 2 > 0 ? a + b : a, 0);
+
+// Now the function can take any number of arguments and they will be accessed as an array
+// Much simpler to work with!
+console.log(addOddNumbers(1, 2, 3, 4, 5));
+console.log(addOddNumbers(1));
+console.log(addOddNumbers());
+console.log(addOddNumbers(11, 24, 343, 8, 51));
+
+const alex = {
+	name: "Alex",
+	age: 30,
+	job: "developer"
+},
+
+carlos = {
+	name: "Carlos",
+	age: 23,
+	job: "doctor"
+},
+
+maria = {
+	name: "Maria",
+	age: 45,
+	job: "teacher"
+},
+
+eleanor = {
+	name: "Eleanor",
+	age: 25,
+	job: "jet pilot"
+};
+
+// Create the following functions:
+// An array containing all the jobs of the person objects passed in:
+$('.error').append("Jobs:" + "<br>");
+const listAllJobs = function(...names) {
+  // const listAllJobs = function(...names) { return names.map(names => names.job);
+  // }
+  for (var i in names) $('.error').append(names[i].name + " is a " + names[i].job + "<br>");
+}
+
+// The mean average (sum / number of values) age of all the people passed in:
+
+const averageAge =  function(...names) {
+  let sum = 0;
+  for (var i in names) {
+    sum += names[i].age;
+  }
+  $('.error').append("The sum is " + sum / names.length);
+  return sum / names.length;
+}
+
+
+
+// You will need to use the rest operator. Try to also use some of the other features you have learned so far (such as arrow functions). Your functions will be called below:
+
+console.log(listAllJobs(alex, carlos, eleanor)); // [ 'developer', 'doctor', 'jet pilot' ]
+console.log(averageAge(alex, carlos, maria, eleanor)); // 30.75
